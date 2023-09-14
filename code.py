@@ -11,6 +11,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
+'''
+The titanic dataset from Kaggle provides
+ a list of features (age, price ticket, etc)
+and the goal is to predict which passanger survived or not.
+Data is labelled so supervised learning suitably employed.
+'''
+
 #setting up the raw dataframes
 full_train_data = pd.read_csv('train.csv')
 full_test_data = pd.read_csv('test.csv')
@@ -129,6 +136,11 @@ print(str(scores_decision_tree.mean())+'+/-'+str(scores_decision_tree.std()))
 print(str(scores_kneighbors.mean())+'+/-'+str(scores_kneighbors.std()))
 print(str(scores_gradboost.mean())+'+/-'+str(scores_gradboost.std()))
 
+'''
+Random Forest seems to consistently do better, hence
+we choose it as the final predictor.
+'''
+
 #prepare the prediction file
 #create a final_prediction.csv file with two columns: PassengerId and Survived 
 # final_prediction = full_test_data['PassengerId']
@@ -140,5 +152,3 @@ pred = random_forest_final.predict(test_data)
 pred = pd.Series(pred, name='Survived')
 final_prediction = pd.concat([full_test_data['PassengerId'],pred], axis=1)
 final_prediction.to_csv('final_prediction.csv', index=False)
-
-
